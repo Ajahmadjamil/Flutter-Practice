@@ -1,5 +1,8 @@
 plugins {
     id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
@@ -7,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.flutterpractices.flutterpractices"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion =  "25.1.8937393"
 
     compileOptions {
@@ -20,13 +23,13 @@ android {
     }
 
     defaultConfig {
+
         applicationId = "com.flutterpractices.flutterpractices"
          minSdk = 23
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
         multiDexEnabled true
-
     }
 
     buildTypes {
@@ -41,3 +44,8 @@ android {
 flutter {
     source = "../.."
 }
+
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.20")
+    implementation("androidx.multidex:multidex:2.0.1")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5") }

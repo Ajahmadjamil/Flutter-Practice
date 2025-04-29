@@ -7,6 +7,7 @@ class Assets {
   static const String assetsCultus = 'assets/cultus.png';
   static const String assetsDocProfile = 'assets/doc_profile.png';
   static const String assetsLogin = 'assets/login.png';
+  static const String carTrackerBackground = 'assets/carTracker/background.jpg';
   static const String choosePlanCheckIcon = 'assets/choosePlan/check_icon.svg';
   static const String choosePlanFreeIcon = 'assets/choosePlan/free_icon.svg';
   static const String choosePlanPaidIcon = 'assets/choosePlan/paid_icon.svg';
@@ -27,5 +28,10 @@ class Assets {
   static const String iconsIcSearch = 'assets/icons/ic_search.svg';
   static const String iconsIcSelectedAdd = 'assets/icons/ic_selected_add.svg';
   static const String iconsIcTakeaway = 'assets/icons/ic_takeaway.svg';
+  static const String setStateGoogle = 'assets/setState/google.png';
+  static const String setStateLoginEmote = 'assets/setState/loginEmote.png';
+  static const String setStateLogo = 'assets/setState/logo.png';
+  static const String setStateSignup = 'assets/setState/signup.png';
+  static const String setStateSignUpLogo = 'assets/setState/sign_up_logo.jpeg';
 
 }
