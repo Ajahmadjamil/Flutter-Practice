@@ -10,6 +10,8 @@ import 'package:flutterpractices/Features/ChoosePlan/ChoosePlanScreen.dart';
 import 'package:flutterpractices/Features/SetState/SetStateScreen.dart';
 import 'package:flutterpractices/Features/Shimmer_effect/ShimmerScreen.dart';
 
+import 'Features/ToDoReminder/ToDoScreen.dart';
+
 class FeaturesScreen extends StatefulWidget {
   const FeaturesScreen({super.key});
 
@@ -67,6 +69,15 @@ class _FeaturesScreenState extends State<FeaturesScreen> {
                   icon: Icons.directions_car,
                   title: "CarTracker with Firebase",
                   onTap: () => initializeAndNavigate(context),
+                ),
+                const SizedBox(height: 16),
+                _buildFeatureCard(
+                  context,
+                  icon: Icons.notes,
+                  title: "ToDoReminder",
+                  onTap: () => _navigateTo(
+                    const ToDoScreen(),
+                  ),
                 ),
               ],
             ),
