@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:background_location/background_location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -7,9 +9,12 @@ import 'package:flutterpractices/Features/CarTracker/SharedPref.dart';
 import 'package:flutterpractices/Features/CarTracker/VehicleFormScreen.dart';
 import 'package:flutterpractices/Features/CherryBerryPos/Screens/SplashScreen.dart';
 import 'package:flutterpractices/Features/ChoosePlan/ChoosePlanScreen.dart';
+import 'package:flutterpractices/Features/ParagraphWithHttp/Api/ApiServices.dart';
+import 'package:flutterpractices/Features/ParagraphWithHttp/Model/ExcerciseResponse.dart';
 import 'package:flutterpractices/Features/SetState/SetStateScreen.dart';
 import 'package:flutterpractices/Features/Shimmer_effect/ShimmerScreen.dart';
 
+import 'Features/ParagraphWithHttp/ExcersiceDetailsScreen.dart';
 import 'Features/ToDoReminder/ToDoScreen.dart';
 
 class FeaturesScreen extends StatefulWidget {
@@ -74,11 +79,24 @@ class _FeaturesScreenState extends State<FeaturesScreen> {
                 _buildFeatureCard(
                   context,
                   icon: Icons.notes,
-                  title: "ToDoReminder",
+                  title: "toDoReminder",
                   onTap: () => _navigateTo(
                     const ToDoScreen(),
                   ),
                 ),
+                const SizedBox(height: 16),
+                _buildFeatureCard(
+                  context,
+                  icon: Icons.note,
+                  title: "Paragraphs with Api",
+                  onTap: () async {
+                    _navigateTo(
+                      ExerciseDetailsScreen(),
+                    );
+                  },
+                )
+
+                ,
               ],
             ),
           ),
@@ -140,6 +158,19 @@ class _FeaturesScreenState extends State<FeaturesScreen> {
       ),
     );
   }
+  Future<ExcerciseResponse> fetchExerciseData() async {
+    try {
+      final response = await ApiServices().getExcerciseDetail();
+      if (response.statusCode == 200) {
+
+        return ExcerciseResponse.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to load exercise: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch data: $e');
+    }
+  }
 
   void _navigateTo(Widget screen) {
     Navigator.of(context).push(
@@ -196,4 +227,6 @@ Future<void> initializeAndNavigate(BuildContext context) async {
       ),
     );
   }
+
+
 }

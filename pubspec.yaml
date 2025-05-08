@@ -37,9 +37,14 @@ dependencies:
   http:
   shared_preferences: ^2.2.1
   intl: ^0.18.0
+  google_fonts:
+  flutter_html:
+  typewritertext:
+  date_picker_timeline:
   bluetooth_print:
   dart_ping_ios:
   image:
+  sqflite: 
   shimmer:
   geocoding:
   firebase_core:
@@ -66,6 +71,7 @@ flutter:
     - assets/icons/
     - assets/choosePlan/
     - assets/setState/
+    - assets/toDoReminder/
     - assets/
 
 flutter_launcher_icons:

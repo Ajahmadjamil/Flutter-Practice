@@ -15,7 +15,7 @@ class NotifyHelper {
     tz.initializeTimeZones();
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings(
-            "appicon"); // Make sure "appicon.png" is in res/drawable
+            "appicon");
 
     // iOS initialization
     const DarwinInitializationSettings initializationSettingsIOS =
@@ -74,7 +74,9 @@ class NotifyHelper {
 
   Future<void> scheduledNotification(int delaySeconds) async {
     try {
-      print("Scheduling notification for $delaySeconds seconds from now...");
+      if (kDebugMode) {
+        print("Scheduling notification for $delaySeconds seconds from now...");
+      }
       await requestNotificationPermission();
       await requestAndroidPermissions();
       requestIOSPermissions();
