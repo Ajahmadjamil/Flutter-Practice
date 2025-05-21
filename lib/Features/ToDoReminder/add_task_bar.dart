@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterpractices/Features/ToDoReminder/Controllers/TaskController.dart';
 import 'package:flutterpractices/Features/ToDoReminder/Models/Task.dart';
@@ -104,7 +105,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     elevation: 4,
                     style: getSubTitleStyle,
                     items:
-                    remindList.map<DropdownMenuItem<String>>((int value) {
+                        remindList.map<DropdownMenuItem<String>>((int value) {
                       return DropdownMenuItem<String>(
                         value: value.toString(),
                         child: Text(value.toString()),
@@ -168,26 +169,27 @@ class _AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
-  _addTaskToDb() async{
-    int value = await _taskController.addTask(task: Task(
-        note: _noteController.text,
-        title: _titleController.text,
-        date: DateFormat.yMd().format(_selectedDate),
-        startTime: _startTime,
-        endTime: _endTime,
-        remind: _selectedRemind,
-        repeat: _selectedRepeat,
-        color: _selectedColor,
-        isCompleted: 0
-    )
-    );
-    print("my id is $value");
+  _addTaskToDb() async {
+    int value = await _taskController.addTask(
+        task: Task(
+            note: _noteController.text,
+            title: _titleController.text,
+            date: DateFormat.yMd().format(_selectedDate),
+            startTime: _startTime,
+            endTime: _endTime,
+            remind: _selectedRemind,
+            repeat: _selectedRepeat,
+            color: _selectedColor,
+            isCompleted: 0));
+    if (kDebugMode) {
+      print("my id is $value");
+    }
   }
 
   _validateData() {
     if (_titleController.text.isNotEmpty || _noteController.text.isNotEmpty) {
       _addTaskToDb();
-      // Get.back();
+      Get.back();
     } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
       Get.snackbar(
         "Required",
@@ -205,7 +207,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
     int hour = int.parse(hourMinute[0]);
     int minute = int.parse(hourMinute[1]);
 
-    // Convert to 24-hour format if it's PM
     if (timeParts[1].toLowerCase() == "pm" && hour != 12) {
       hour += 12;
     }
@@ -256,17 +257,17 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 child: CircleAvatar(
                   child: _selectedColor == index
                       ? Icon(
-                    Icons.done,
-                    color: Colors.white,
-                    size: 16,
-                  )
+                          Icons.done,
+                          color: Colors.white,
+                          size: 16,
+                        )
                       : Container(),
                   radius: 14,
                   backgroundColor: index == 0
                       ? primaryClr
                       : index == 1
-                      ? pinkClr
-                      : yellowClr,
+                          ? pinkClr
+                          : yellowClr,
                 ),
               ),
             );

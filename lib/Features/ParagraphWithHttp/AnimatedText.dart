@@ -32,7 +32,7 @@ class _AnimatedTextState extends State<AnimatedText> {
   }
 
   void _startTyping() {
-    _typingTimer = Timer.periodic(const Duration(milliseconds: 5), (timer) {
+    _typingTimer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       if (_charIndex < widget.text.length) {
         setState(() => _charIndex++);
       } else {
@@ -50,6 +50,13 @@ class _AnimatedTextState extends State<AnimatedText> {
 
   @override
   Widget build(BuildContext context) {
+    
+    // return Text("ahmad",
+    // style: getRegularStyle(color: Colors.black,
+    // fontSize: 14
+    // ),
+    //
+    // );
     return Text(
       widget.text.substring(0, _charIndex),
       style: widget.isTitle?getBoldStyle(color: Colors.black):getRegularStyle(color: Colors.black),

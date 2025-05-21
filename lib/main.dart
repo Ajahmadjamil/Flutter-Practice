@@ -6,7 +6,8 @@ import 'package:flutterpractices/firebase_options.dart';
 import 'package:flutterpractices/pr.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
-
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'Features/ToDoReminder/Themes/ThemeServices.dart';
 import 'Features/ToDoReminder/Themes/Themes.dart';
 
@@ -14,6 +15,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.initDb();
   await GetStorage.init();
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Karachi'));
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

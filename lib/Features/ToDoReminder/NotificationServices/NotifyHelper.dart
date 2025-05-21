@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutterpractices/Features/ToDoReminder/Models/Task.dart';
+import 'package:flutterpractices/Features/ToDoReminder/NotificationServices/NotifiedPage.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -71,26 +73,79 @@ class NotifyHelper {
       payload: 'foreground_payload',
     );
   }
+  //
+  // Future<void> scheduledNotification(int duration) async {
+  //   try {
+  //     await requestNotificationPermission();
+  //     await requestAndroidPermissions();
+  //     requestIOSPermissions();
+  //
+  //
+  //     await flutterLocalNotificationsPlugin.zonedSchedule(
+  //       0,
+  //       'Scheduled Notification',
+  //       'This notification was scheduled  seconds ago',
+  //
+  //       tz.TZDateTime.now(tz.local).add(Duration(seconds: duration)),
+  //       const NotificationDetails(
+  //         android: AndroidNotificationDetails(
+  //           'scheduled_channel_id',
+  //           'scheduled_channel_name',
+  //           channelDescription: 'Scheduled notifications',
+  //           importance: Importance.max,
+  //           priority: Priority.high,
+  //           playSound: true,
+  //         ),
+  //         iOS: DarwinNotificationDetails(
+  //           presentAlert: true,
+  //           presentBadge: true,
+  //           presentSound: true,
+  //         ),
+  //       ),
+  //       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+  //       matchDateTimeComponents: DateTimeComponents.time,
+  //     );
+  //     print("Notification scheduled successfully!");
+  //   } catch (e) {
+  //     print("Error scheduling notification: $e");
+  //   }
+  // }
+  Future<void> initializeTimeZones() async {
+    tz.initializeTimeZones();
+    tz.setLocalLocation(tz.getLocation('Asia/Karachi')); // or your local time zone
+  }
 
-  Future<void> scheduledNotification(int delaySeconds) async {
+  Future<void> scheduledNotification(int hour, int minute, Task task) async {
     try {
-      if (kDebugMode) {
-        print("Scheduling notification for $delaySeconds seconds from now...");
+      // Ensure timezone is initialized
+      await initializeTimeZones();
+
+      // Get current time and create scheduled time
+      final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+      tz.TZDateTime scheduledDate = tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day,
+        hour,
+        minute,
+      );
+
+      // If the scheduled time is in the past, move it to the next day
+      if (scheduledDate.isBefore(now)) {
+        scheduledDate = scheduledDate.add(const Duration(days: 1));
       }
-      await requestNotificationPermission();
-      await requestAndroidPermissions();
-      requestIOSPermissions();
 
       await flutterLocalNotificationsPlugin.zonedSchedule(
-        1,
-        'Scheduled Notification',
-        'This notification was scheduled $delaySeconds seconds ago',
-        tz.TZDateTime.now(tz.local).add(Duration(seconds: delaySeconds)),
+        task.id ?? DateTime.now().millisecondsSinceEpoch, // Unique ID
+        'Task Reminder',
+        task.title ?? 'It\'s time!',
+        scheduledDate,
         const NotificationDetails(
           android: AndroidNotificationDetails(
             'scheduled_channel_id',
             'scheduled_channel_name',
-            channelDescription: 'Scheduled notifications',
+            channelDescription: 'Scheduled task notifications',
             importance: Importance.max,
             priority: Priority.high,
             playSound: true,
@@ -103,28 +158,39 @@ class NotifyHelper {
         ),
         androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         matchDateTimeComponents: DateTimeComponents.time,
+        payload: "${task.title}| "+"${task.note}|"
+    // uiLocalNotificationDateInterpretation:
+        // UILocalNotificationDateInterpretation.absoluteTime,
       );
-      print("Notification scheduled successfully!");
+      debugPrint("✅ Scheduled notification for: $scheduledDate");
     } catch (e) {
-      print("Error scheduling notification: $e");
+      debugPrint("❌ Error scheduling notification: $e");
     }
-  }  Future<void> selectNotification(String? payload) async {
+  }
+
+
+
+  Future<void> selectNotification(String? payload) async {
     if (payload != null) {
       print('Notification payload: $payload');
     }
 
-    Get.dialog(
-      AlertDialog(
-        title: const Text('Notification'),
-        content: Text('Payload received: $payload'),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
+    String title = payload.toString().split("|")[0];
+    String body = payload.toString().split("|")[1];
+
+    print("title is $title");
+
+    if(title=="THEME CHANGED"){
+      Get.snackbar(
+        title,
+        body,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Get.isDarkMode?Colors.black:Colors.white,
+        icon: const Icon(Icons.warning_amber_rounded),
+      );
+    }else{
+    Get.to(NotifiedPage(label: payload!));
+  }
   }
 
   Future<void> requestAndroidPermissions() async {
@@ -182,7 +248,7 @@ class NotifyHelper {
       title,
       body,
       platformChannelSpecifics,
-      payload: 'It could be anything you pass',
+      payload: '$title|$body|'
     );
   }
 }

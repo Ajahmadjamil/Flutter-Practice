@@ -57,6 +57,8 @@ dependencies:
   get:
   flutter_local_notifications:
   flutter_native_timezone:
+  timezone:
+  flutter_staggered_animations:
 
 dev_dependencies:
   flutter_test:

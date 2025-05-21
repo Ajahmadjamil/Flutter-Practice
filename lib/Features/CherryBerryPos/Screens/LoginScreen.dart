@@ -9,10 +9,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'BaseScreen.dart';
 import '../Utils/Constants.dart';
 
-
-
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -37,8 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           children: [
             Container(
-              color: Color(0xffe3e9f5),
-              child: Padding(
+              color: const Color(0xffe3e9f5),
+              child: const Padding(
                 padding: EdgeInsets.fromLTRB(14, 85, 14, 8),
                 child: Image(
                   image: AssetImage("assets/login.png"),
@@ -48,16 +46,16 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               width: double.infinity,
               // alignment: FractionalOffset.bottomCenter,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(32),
                       topRight: Radius.circular(32))),
               child: Padding(
-                padding: EdgeInsets.fromLTRB(16, 24, 16, 64),
+                padding: const EdgeInsets.fromLTRB(16, 24, 16, 64),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       "Login Account",
                       style: TextStyle(
                           color: Colors.black,
@@ -68,10 +66,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Email",
@@ -81,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontFamily: 'fonts/inter_regular_400'),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           TextFormField(
@@ -89,17 +87,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: InputDecoration(
                               focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(color: Colors.blue)),
+                                  borderSide: const BorderSide(color: Colors.blue)),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(color: Colors.grey)),
+                                  borderSide: const BorderSide(color: Colors.grey)),
                               hintText: "Enter Email Address",
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
-                          Align(
+                          const Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Password",
@@ -109,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   fontFamily: 'fonts/inter_regular_400'),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           TextFormField(
@@ -124,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               hintText: "Enter Password",
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 16,
                           ),
                           Padding(
@@ -136,11 +134,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: Container(
                                 height: 48,
                                 width: double.infinity,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
                                     color: Colors.blue),
-                                child: Center(
+                                child: const Center(
                                   child: Text(
                                     'Login',
                                     style: TextStyle(
@@ -162,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
       ),
-      backgroundColor: Color(0xffe3e9f5),
+      backgroundColor: const Color(0xffe3e9f5),
     );
   }
 
