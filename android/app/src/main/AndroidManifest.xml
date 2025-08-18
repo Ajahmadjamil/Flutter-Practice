@@ -15,8 +15,11 @@
     <application
         android:label="flutterpractices"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
-       <service android:name="com.dexterous.flutterlocalnotifications.ForegroundService" android:foregroundServiceType="dataSync|mediaPlayback"/>
+
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/NormalTheme"> <!-- Make sure this matches your theme -->
+
+        <service android:name="com.dexterous.flutterlocalnotifications.ForegroundService" android:foregroundServiceType="dataSync|mediaPlayback"/>
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver" android:exported="true"/>
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" android:exported="true"/>
 

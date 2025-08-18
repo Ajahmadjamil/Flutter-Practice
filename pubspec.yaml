@@ -59,6 +59,7 @@ dependencies:
   flutter_native_timezone:
   timezone:
   flutter_staggered_animations:
+  flutter_stripe: ^11.5.0
 
 dev_dependencies:
   flutter_test:
