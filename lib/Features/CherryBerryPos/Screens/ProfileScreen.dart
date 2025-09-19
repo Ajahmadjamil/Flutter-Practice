@@ -5,7 +5,6 @@ import 'package:flutterpractices/Features/CherryBerryPos/Model/LoginResponse.dar
 import 'package:flutterpractices/Features/CherryBerryPos/Utils/SharedPref.dart';
 import 'package:flutterpractices/generated/assets.dart';
 
-import '../PrintPage.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({super.key});
@@ -145,31 +144,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const ProfileItem(title: "Branch Name", value: ""),
                 ProfileItem(
                     title: "Role", value: "${loginResponse.data?.rolename}"),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => PrintPage(data)),
-                    );
-                    // something();
-                  },
-                  child: Container(
-                    height: 48,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(10)),
-                        color: Colors.blue),
-                    child: Center(
-                      child: Text(
-                        'print',
-                        style: TextStyle(
-                            fontFamily: "fonts/inter_regular_400",
-                            fontSize: 16,
-                            color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

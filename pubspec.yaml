@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.4
+  sdk: '>=3.4.1 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -41,7 +41,6 @@ dependencies:
   flutter_html:
   typewritertext:
   date_picker_timeline:
-  bluetooth_print:
   dart_ping_ios:
   image:
   sqflite: 
@@ -51,12 +50,12 @@ dependencies:
   cloud_firestore:
   battery_plus:
   permission_handler:
-  background_location: ^0.13.0
+  flutter_background_service: ^5.0.0
+
   geolocator: ^13.0.4
   get_storage:
   get:
   flutter_local_notifications:
-  flutter_native_timezone:
   timezone:
   flutter_staggered_animations:
   flutter_stripe: ^11.5.0

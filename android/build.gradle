@@ -1,8 +1,23 @@
+buildscript {
+    ext {
+        kotlin_version = '2.1.0'
+        compose_compiler_version = '1.5.14' // Add this line
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.android.tools.build:gradle:8.5.2"
+        classpath "org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlin_version"
+    }
+}
+
 allprojects {
     repositories {
         google()
         mavenCentral()
-
     }
 }
 

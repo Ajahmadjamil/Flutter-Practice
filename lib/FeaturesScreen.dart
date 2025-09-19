@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:background_location/background_location.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutterpractices/Features/CarTracker/LocationPage.dart';
 import 'package:flutterpractices/Features/CarTracker/SharedPref.dart';
 import 'package:flutterpractices/Features/CarTracker/VehicleFormScreen.dart';
@@ -181,43 +181,36 @@ class _FeaturesScreenState extends State<FeaturesScreen> {
 
 Future<void> initializeAndNavigate(BuildContext context) async {
   try {
-    await BackgroundLocation.setAndroidNotification(
-      title: 'Car Tracker',
-      message: 'Tracking location in background',
-      icon: '@mipmap/ic_launcher',
-    );
+    final service = FlutterBackgroundService();
 
-    await BackgroundLocation.startLocationService(distanceFilter: 0);
+    // Start the background service
+    service.startService();
 
-    BackgroundLocation.getLocationUpdates((location) {
-      if (kDebugMode) {
-        print(
-            "Background Location Update: ${location.latitude}, ${location.longitude}");
-      }
-    });
-
+    // Load driver info
     SharedPref sharedPref = SharedPref();
     Map<String, String> driverInfo = await sharedPref.getDriverInfo();
     String locationDocPath = driverInfo['locationDocPath'] ?? '';
 
+    // Navigate to correct screen
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => locationDocPath.isNotEmpty
             ? LocationPage(
-                documentRef: FirebaseFirestore.instance.doc(locationDocPath))
+          documentRef: FirebaseFirestore.instance.doc(locationDocPath),
+        )
             : const VehicleFormScreen(),
       ),
     );
   } catch (e) {
     if (kDebugMode) {
-      print("Error initializing location service: $e");
+      print("Error initializing background service: $e");
     }
 
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
         title: const Text("Error"),
-        content: Text("Failed to start background location: $e"),
+        content: Text("Failed to start background service: $e"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -227,6 +220,4 @@ Future<void> initializeAndNavigate(BuildContext context) async {
       ),
     );
   }
-
-
 }
