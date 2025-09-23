@@ -9,7 +9,6 @@ import 'package:timezone/timezone.dart' as tz;
 import 'Features/ToDoReminder/db/DatabaseHelper.dart';
 import 'Features/ToDoReminder/Themes/ThemeServices.dart';
 import 'Features/ToDoReminder/Themes/Themes.dart';
-import 'Features/StripePaymentMethod/PaymentMethodScreen.dart';
 import 'FeaturesScreen.dart';
 import 'firebase_options.dart';
 import 'pr.dart';
@@ -37,9 +36,7 @@ Future<void> main() async {
   tz.setLocalLocation(tz.getLocation('Asia/Karachi'));
 
   /// Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   /// Background service
   await initializeService();
@@ -61,11 +58,7 @@ Future<void> initializeService() async {
       initialNotificationContent: 'Tracking location in background',
       foregroundServiceNotificationId: 888,
     ),
-    iosConfiguration: IosConfiguration(
-      autoStart: false,
-      onForeground: onStart,
-      onBackground: onIosBackground,
-    ),
+    iosConfiguration: IosConfiguration(autoStart: false, onForeground: onStart, onBackground: onIosBackground),
   );
 }
 
@@ -79,10 +72,7 @@ void onStart(ServiceInstance service) {
   }
 
   Geolocator.getPositionStream(
-    locationSettings: const LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 0,
-    ),
+    locationSettings: const LocationSettings(accuracy: LocationAccuracy.high, distanceFilter: 0),
   ).listen((Position position) {
     if (kDebugMode) {
       print("BG Location: ${position.latitude}, ${position.longitude}");

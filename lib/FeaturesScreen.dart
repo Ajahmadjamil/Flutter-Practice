@@ -9,10 +9,16 @@ import 'package:flutterpractices/Features/CarTracker/SharedPref.dart';
 import 'package:flutterpractices/Features/CarTracker/VehicleFormScreen.dart';
 import 'package:flutterpractices/Features/CherryBerryPos/Screens/SplashScreen.dart';
 import 'package:flutterpractices/Features/ChoosePlan/ChoosePlanScreen.dart';
+import 'package:flutterpractices/Features/MethodChanneling/controller.dart';
+import 'package:flutterpractices/Features/MethodChanneling/screen.dart';
 import 'package:flutterpractices/Features/ParagraphWithHttp/Api/ApiServices.dart';
 import 'package:flutterpractices/Features/ParagraphWithHttp/Model/ExcerciseResponse.dart';
 import 'package:flutterpractices/Features/SetState/SetStateScreen.dart';
 import 'package:flutterpractices/Features/Shimmer_effect/ShimmerScreen.dart';
+import 'package:flutterpractices/Features/StripePaymentMethod/paymentController.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:provider/provider.dart';
 
 import 'Features/ParagraphWithHttp/ExcersiceDetailsScreen.dart';
 import 'Features/ToDoReminder/ToDoScreen.dart';
@@ -91,12 +97,40 @@ class _FeaturesScreenState extends State<FeaturesScreen> {
                   title: "Paragraphs with Api",
                   onTap: () async {
                     _navigateTo(
-                      ExerciseDetailsScreen(),
+                      const ExerciseDetailsScreen(),
                     );
                   },
-                )
-
-                ,
+                ),
+                const SizedBox(height: 16),
+                _buildFeatureCard(
+                  context,
+                  icon: Icons.note,
+                  title: "Stripe Payment Method",
+                  onTap: () async {
+                    final PaymentController con = Get.put(PaymentController());
+                    if (con.isClicked.value == false) {
+                      await con.makePayment();
+                      print("isClicked");
+                    }
+                  },
+                ),
+                const SizedBox(height: 16),
+                _buildFeatureCard(
+                  context,
+                  icon: Icons.note,
+                  title: "Method Channeling",
+                  onTap: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ChangeNotifierProvider(
+                          create: (_) => BatteryProvider()..fetchBatteryLevel(),
+                          child: const MethodChannelingScreen(),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -150,19 +184,18 @@ class _FeaturesScreenState extends State<FeaturesScreen> {
                 ),
               ),
               const Spacer(),
-              Icon(Icons.arrow_forward_ios,
-                  color: Colors.blue.shade600, size: 16),
+              Icon(Icons.arrow_forward_ios, color: Colors.blue.shade600, size: 16),
             ],
           ),
         ),
       ),
     );
   }
+
   Future<ExcerciseResponse> fetchExerciseData() async {
     try {
       final response = await ApiServices().getExcerciseDetail();
       if (response.statusCode == 200) {
-
         return ExcerciseResponse.fromJson(json.decode(response.body));
       } else {
         throw Exception('Failed to load exercise: ${response.statusCode}');
@@ -196,8 +229,8 @@ Future<void> initializeAndNavigate(BuildContext context) async {
       MaterialPageRoute(
         builder: (context) => locationDocPath.isNotEmpty
             ? LocationPage(
-          documentRef: FirebaseFirestore.instance.doc(locationDocPath),
-        )
+                documentRef: FirebaseFirestore.instance.doc(locationDocPath),
+              )
             : const VehicleFormScreen(),
       ),
     );

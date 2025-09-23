@@ -23,14 +23,14 @@ android {
     ndkVersion =  "27.0.12077973"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
         coreLibraryDesugaringEnabled true
 
     }
 
     kotlinOptions {
-        jvmTarget = "21"
+        jvmTarget = "17"
     }
 
 
@@ -55,7 +55,7 @@ android {
 
 
 kotlin {
-    jvmToolchain(21) // forces Kotlin to use Java 21
+    jvmToolchain(17) // forces Kotlin to use Java 21
 }
 
 flutter {

@@ -51,7 +51,7 @@ dependencies:
   battery_plus:
   permission_handler:
   flutter_background_service: ^5.0.0
-
+  provider:
   geolocator: ^13.0.4
   get_storage:
   get:
